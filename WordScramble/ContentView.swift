@@ -45,6 +45,14 @@ struct ContentView: View {
             } message: {
                 Text(alertMessage)
             }
+            .toolbar {
+                Button(role: .destructive) {
+                    restartGame()
+                } label: {
+                    Text("Restart")
+                    Image(systemName: "gobackward")
+                }
+            }
         }
     }
     
@@ -143,6 +151,12 @@ struct ContentView: View {
         alertTitle = title
         alertMessage = message
         showAlert = true
+    }
+    
+    func restartGame() {
+        newWord = ""
+        usedWords.removeAll()
+        startGame()
     }
 }
 
