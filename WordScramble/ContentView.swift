@@ -67,6 +67,16 @@ struct ContentView: View {
             return
         }
         
+        guard !isRootWord(word: answer) else {
+            wordError(title: "Used the root word!", message: "You can do better mate.")
+            return
+        }
+        
+        guard isAppropriateLength(word: answer) else {
+            wordError(title: "Word too short!", message: "Think big. Go large!")
+            return
+        }
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
@@ -119,6 +129,14 @@ struct ContentView: View {
         // if NSNotFound, it means there is a legit word as no error was found
         // therefore we want it to be NSNotFound. This means the word is legit.
         return misspelledRange.location == NSNotFound
+    }
+    
+    func isRootWord(word: String) -> Bool {
+        return word == rootWord
+    }
+    
+    func isAppropriateLength(word: String) -> Bool {
+        return word.count >= 3
     }
     
     func wordError(title: String, message: String) {
