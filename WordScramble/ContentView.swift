@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var score = 0
     
     @State private var alertTitle = ""
     @State private var alertMessage = ""
@@ -46,11 +47,19 @@ struct ContentView: View {
                 Text(alertMessage)
             }
             .toolbar {
-                Button(role: .destructive) {
-                    restartGame()
-                } label: {
-                    Text("Restart")
-                    Image(systemName: "gobackward")
+                ToolbarItemGroup(placement: .principal) {
+                    HStack {
+                        Text("Score: \(score)")
+                        
+                        Spacer()
+                        
+                        Button(role: .destructive) {
+                            restartGame()
+                        } label: {
+                            Text("Restart")
+                            Image(systemName: "gobackward")
+                        }
+                    }
                 }
             }
         }
@@ -88,6 +97,7 @@ struct ContentView: View {
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
+        score += answer.count
         newWord = ""
     }
     
@@ -156,6 +166,7 @@ struct ContentView: View {
     func restartGame() {
         newWord = ""
         usedWords.removeAll()
+        score = 0
         startGame()
     }
 }
